@@ -1,0 +1,58 @@
+#!/bin/bash
+
+. /etc/default/backend
+
+master_start() {
+  CHECK_STATUS=$(initctl status backend-$DEFAULT_BACKEND)
+  if [[ "$CHECK_STATUS" == *waiting* ]]; then
+    initctl start backend-$DEFAULT_BACKEND
+  fi
+}
+
+master_stop() {
+  CHECK_STATUS=$(initctl status backend-$DEFAULT_BACKEND)
+  if [[ "$CHECK_STATUS" == *running* ]]; then
+    initctl stop backend-$DEFAULT_BACKEND
+  fi
+}
+
+prestart() {
+  BACKEND=$(echo $UPSTART_JOB | sed 's/backend-//')
+
+  # stop other backends
+  if [ -f /tmp/active-backend ]; then
+    STARTED_BACKEND=$(cat /tmp/active-backend)
+    if [ "$STARTED_BACKEND" != "" ]; then
+      CHECK_STATUS=$(initctl status backend-$STARTED_BACKEND)
+      if [[ "$CHECK_STATUS" == *running* ]]; then
+        initctl stop backend-$STARTED_BACKEND
+      fi
+    fi
+  fi
+
+  echo "$BACKEND" > /tmp/active-backend
+
+  # sync job status to backend if this default backend
+  if [ "$DEFAULT_BACKEND" = "$BACKEND" ]; then
+    CHECK_STATUS=$(initctl status backend)
+    if [[ "$CHECK_STATUS" == *waiting* ]]; then
+      initctl start backend
+    fi
+  fi
+
+}
+
+poststop() {
+  BACKEND=$(echo $UPSTART_JOB | sed 's/backend-//')
+
+  # sync job status to backend if this default backend
+  if [ "$DEFAULT_BACKEND" = "$BACKEND" ]; then
+    CHECK_STATUS=$(initctl status backend)
+    if [[ "$CHECK_STATUS" == *running* ]]; then
+      initctl stop backend
+    fi
+  fi
+
+  # clear backend
+  echo "" > /tmp/active-backend
+}

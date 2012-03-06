@@ -1,0 +1,17 @@
+Source: yavdr-backend
+Section: video
+Priority: extra
+Maintainer: Marco Scholl <develop@marco-scholl.de>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.2
+Homepage: http://www.yavdr.org
+
+Package: yavdr-backend-base
+Architecture: all
+Depends: ${misc:Depends} yavdr-base 
+Description: backend base
+
+Package: yavdr-backend-vdr
+Architecture: all
+Depends: ${misc:Depends} yavdr-backend-vdr, yavdr-vdr
+Description: backend for vdr

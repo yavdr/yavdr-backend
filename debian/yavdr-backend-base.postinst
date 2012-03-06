@@ -1,0 +1,18 @@
+#!/bin/sh -e
+
+case "$1" in
+  configure)
+
+  # prefill hdf
+  . /usr/share/yavdr/helpers/hdf_prefill
+  #hdf_prefill "system.display.primary.rate" "50"
+
+  # temlate files
+  /usr/bin/process-template --owner root --group root --mode 0644 /etc/default/backend
+
+  ;;
+
+esac
+
+exit 0
+
