@@ -13,5 +13,5 @@ Description: backend base
 
 Package: yavdr-backend-vdr
 Architecture: all
-Depends: ${misc:Depends} yavdr-backend-vdr, yavdr-vdr
+Depends: ${misc:Depends} yavdr-backend-base, yavdr-vdr
 Description: backend for vdr
