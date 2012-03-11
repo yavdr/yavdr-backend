@@ -11,3 +11,7 @@
 
 %:
 	dh $@ 
+
+override_dh_installdeb:
+	dh_installdeb
+	rm debian/yavdr-backend-base/DEBIAN/conffiles

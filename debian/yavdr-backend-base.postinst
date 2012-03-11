@@ -3,6 +3,10 @@
 case "$1" in
   configure)
 
+  # conffiles
+  . /usr/share/yavdr/helpers/conffiles
+  install_conffile yavdr-backend-base /etc/default/backend
+
   # prefill hdf
   . /usr/share/yavdr/helpers/hdf_prefill
   #hdf_prefill "system.display.primary.rate" "50"
