@@ -4,16 +4,16 @@
 . /usr/share/yavdr/helpers/upstart-base
 
 master_start() {
-  CHECK_STATUS=$(LC_MESSAGES=C initctl status backend-$DEFAULT_BACKEND)
+  CHECK_STATUS=$(LC_MESSAGES=C /sbin/initctl status backend-$DEFAULT_BACKEND)
   if [[ "$CHECK_STATUS" == *waiting* ]]; then
-    initctl start backend-$DEFAULT_BACKEND
+    /sbin/initctl start backend-$DEFAULT_BACKEND
   fi
 }
 
 master_stop() {
-  CHECK_STATUS=$(LC_MESSAGES=C initctl status backend-$DEFAULT_BACKEND)
+  CHECK_STATUS=$(LC_MESSAGES=C /sbin/initctl status backend-$DEFAULT_BACKEND)
   if [[ "$CHECK_STATUS" == *running* ]]; then
-    initctl stop backend-$DEFAULT_BACKEND
+    /sbin/initctl stop backend-$DEFAULT_BACKEND
   fi
 }
 
@@ -25,20 +25,21 @@ prestart() {
   if [ -f /run/yavdr/active-backend ]; then
     STARTED_BACKEND=$(cat /run/yavdr/active-backend)
     if [ "$STARTED_BACKEND" != "" ]; then
-      CHECK_STATUS=$(LC_MESSAGES=C initctl status backend-$STARTED_BACKEND)
+      CHECK_STATUS=$(LC_MESSAGES=C /sbin/initctl status backend-$STARTED_BACKEND)
       if [[ "$CHECK_STATUS" == *running* ]]; then
-        initctl stop backend-$STARTED_BACKEND
+        /sbin/initctl stop backend-$STARTED_BACKEND
       fi
     fi
   fi
 
   echo "$BACKEND" > /run/yavdr/active-backend
+  chmod a+w /run/yavdr/active-backend
 
   # sync job status to backend if this default backend
   if [ "$DEFAULT_BACKEND" = "$BACKEND" ]; then
-    CHECK_STATUS=$(LC_MESSAGES=C initctl status backend)
+    CHECK_STATUS=$(LC_MESSAGES=C /sbin/initctl status backend)
     if [[ "$CHECK_STATUS" == *waiting* ]]; then
-      initctl start backend
+      /sbin/initctl start backend
     fi
   fi
 }
@@ -49,9 +50,9 @@ poststop() {
 
   # sync job status to backend if this default backend
   if [ "$DEFAULT_BACKEND" = "$BACKEND" ]; then
-    CHECK_STATUS=$(LC_MESSAGES=C initctl status backend)
+    CHECK_STATUS=$(LC_MESSAGES=C /sbin/initctl status backend)
     if [[ "$CHECK_STATUS" == *running* ]]; then
-      initctl stop backend
+      /sbin/initctl stop backend
     fi
   fi
 
