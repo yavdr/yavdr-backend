@@ -6,7 +6,8 @@ Build-Depends: debhelper (>= 8.0.0)
 Standards-Version: 3.9.2
 Homepage: http://www.yavdr.org
 
-Package: yavdr-backend-base
+Package: yavdr-backend
+Conflicts: yavdr-backend-base
 Architecture: all
 Depends: ${misc:Depends} yavdr-base 
 Description: backend base
