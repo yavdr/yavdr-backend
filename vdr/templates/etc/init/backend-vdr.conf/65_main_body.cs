@@ -1,39 +1,22 @@
-description "vdr backend"
-author "Marco Scholl <yavdr@marco-scholl.de>"
-
-stop on runlevel [016]
-
-env HOME=/var/lib/vdr
-export HOME
-
-nice -10
-
-kill timeout 60
-normal exit 0
-expect stop
-
-respawn
-respawn limit 10 5
-
-umask 0000
-
-pre-start script
-  . /usr/share/yavdr/helpers/upstart-backend
-  prestart
-end script
-
-post-stop script
-  . /usr/share/yavdr/helpers/upstart-backend
-  poststop
-end script
-
-script
-
   # loading main config
   . /usr/lib/vdr/config-loader.sh
 
   # loading plugin config
   . /usr/lib/vdr/plugin-loader.sh
+
+  # loading recoring commands
+  . /usr/lib/vdr/commands-loader.sh
+  mergecommands "reccmds"
+
+  # set environment
+  LANG=$VDR_LANG
+  LC_ALL=$VDR_LANG
+  export LANG LC_ALL
+
+  # set charset override
+  if [ -n "$VDR_CHARSET_OVERRIDE" ] ; then
+    export VDR_CHARSET_OVERRIDE=$VDR_CHARSET_OVERRIDE
+  fi
 
   # loading recoring commands
   . /usr/lib/vdr/commands-loader.sh
@@ -57,12 +40,4 @@ script
   exec $DAEMON --lirc=$LIRC -v $VIDEO_DIR -c $CFG_DIR -L $PLUGIN_DIR -r $REC_CMD -s $VDRSHUTDOWN \
     -E $EPG_FILE -u $USER -g /tmp --port $SVDRP_PORT $OPTIONS "${PLUGINS[@]}" $REDIRECT &> /var/log/vdr/startup.log
 
-end script
 
-post-start script
-  # check ready
-  /usr/bin/vdr-dbus-send /Remote remote.Disable ||:
-
-  # start frontend if possible
-  /sbin/initctl emit start-frontend ||:
-end script

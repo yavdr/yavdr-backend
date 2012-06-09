@@ -5,5 +5,5 @@
 
 cd /usr/share/yavdr/backends/
 for FRONTEND in *; do
-  /usr/bin/process-template --owner root --group root --mode 0644 /etc/init/backend-$FRONTEND.conf ||:
+  /usr/bin/process-template --owner root --group root --mode 0644 /etc/init/backend-$FRONTEND.conf
 done
