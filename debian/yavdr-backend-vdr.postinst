@@ -3,10 +3,6 @@
 case "$1" in
   configure)
 
-  # conffiles
-  . /usr/share/yavdr/helpers/conffiles
-  install_conffile yavdr-backend-vdr /etc/init/backend-vdr.conf
-
   # temlate files
   yavdr-template-backend
 

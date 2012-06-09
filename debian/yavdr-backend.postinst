@@ -6,8 +6,6 @@ case "$1" in
   # conffiles
   . /usr/share/yavdr/helpers/conffiles
   install_conffile yavdr-backend-base /etc/default/backend
-  install_conffile yavdr-backend-base /etc/init/backend.conf
-  install_conffile yavdr-backend-base /etc/init/backend-dummy.conf
 
   # prefill hdf
   . /usr/share/yavdr/helpers/hdf_prefill
