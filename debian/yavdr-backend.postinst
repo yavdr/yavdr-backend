@@ -12,7 +12,7 @@ case "$1" in
   hdf_prefill "backend.default" "dummy"
 
   # temlate files
-  /usr/bin/process-template --owner root --group root --mode 0644 /etc/default/backend
+  yavdr-template-backend
 
   ;;
 
