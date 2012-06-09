@@ -1,1 +1,1 @@
-stop runlevel [016]
+stop on runlevel [016]
