@@ -4,8 +4,7 @@ case "$1" in
   configure)
 
   # prefill hdf
-  . /usr/share/yavdr/helpers/hdf_prefill
-  hdf_prefill "backend.default" "dummy"
+  yavdr-db-tool -k backend.default -a preset -v "dummy"
 
   # temlate files
   yavdr-template-backend
