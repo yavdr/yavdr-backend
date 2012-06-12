@@ -1,5 +1,5 @@
 #!/bin/bash
 
-for BACKEND in `ls /usr/share/yavdr/backends/`; do
+for BACKEND in `ls /usr/share/yavdr/modules/backends/`; do
   echo $BACKEND
 done

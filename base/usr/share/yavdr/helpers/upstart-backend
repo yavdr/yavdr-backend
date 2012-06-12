@@ -3,10 +3,6 @@
 . /etc/default/backend
 . /usr/share/yavdr/helpers/upstart-base
 
-#stop_other_frontends() {
-#  
-#}
-
 master_start() {
   CHECK_STATUS=$(LC_MESSAGES=C /sbin/initctl status backend-$DEFAULT_BACKEND)
   if [[ "$CHECK_STATUS" == *waiting* ]]; then
