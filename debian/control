@@ -9,7 +9,7 @@ Homepage: http://www.yavdr.org
 Package: yavdr-backend
 Conflicts: yavdr-backend-base
 Architecture: all
-Depends: ${misc:Depends} yavdr-base 
+Depends: ${misc:Depends} yavdr-base, yavdr-backend-vdr
 Description: backend base
 
 Package: yavdr-backend-vdr
