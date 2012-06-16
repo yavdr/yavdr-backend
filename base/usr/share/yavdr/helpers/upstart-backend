@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-DEFAULT_FRONTEND=$(yavdr-db-tool -k module.backend)
+DEFAULT_BACKEND=$(yavdr-db-tool -k module.backend)
 
 . /usr/share/yavdr/helpers/upstart-base
 
