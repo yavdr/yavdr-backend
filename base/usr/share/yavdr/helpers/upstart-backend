@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/bash -e
 
-. /etc/default/backend
+DEFAULT_FRONTEND=$(yavdr-db-tool -k module.backend)
+
 . /usr/share/yavdr/helpers/upstart-base
 
 master_start() {
