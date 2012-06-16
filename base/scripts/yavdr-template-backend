@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
 logger -t yavdr-template-backend "templating"
-/usr/bin/process-template --owner root --group root --mode 0644 /etc/default/backend
 /usr/bin/process-template --owner root --group root --mode 0644 /etc/init/backend.conf
 
 for BACKEND in `yavdr-list-backend-modules`; do
